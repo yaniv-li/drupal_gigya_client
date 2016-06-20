@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Installation functions for gigya_client module.
+ */
+
+function gigya_client_install() {
+
+}
+
+function gigya_client_uninstall() {
+
+}
