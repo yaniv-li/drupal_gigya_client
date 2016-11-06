@@ -1,0 +1,38 @@
+<?php
+
+/**
+ *
+ * This is an example of how to fetch ds data only for the current user uid.
+ *
+ */
+function gigya_client_fetch_ds_data_only() {
+  global $user;
+  $gigya_uid = _gigya_get_guid_by_duid($user->uid);
+  if (!empty($gigya_uid)) {
+    $ds_data = gigya_ds_get_data($gigya_uid);
+  }
+
+
+}
+
+/**
+ * The following example add a value to the ds data array.
+ * @param $ds_data
+ */
+function gigya_client_gigya_ds_data_alter(&$ds_data) {
+//  $ds_data['abc'] = "d";
+}
+
+/**
+ * this hook lets other modules modify the user array before it is sent to the user save function
+ * when a drupal is created via the Gigya RaaS.
+ * the first parameter is the array that would be sent to the user_save function
+ * the second on is the parameter is the info passed from gigya.
+ * http://developers.gigya.com/020_Client_API/020_Accounts/accounts.socialLogin#response
+ * @param $new_user_array
+ * @param $gigya_info
+ */
+function gigya_client_gigya_raas_create_user_alter(&$new_user_array, $gigya_info) {
+  // Use the user first name as a drupal user name
+//  $new_user_array['name'] = $gigya_info['firstName'];
+}
