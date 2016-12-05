@@ -36,3 +36,23 @@ function gigya_client_gigya_raas_create_user_alter(&$new_user_array, $gigya_info
   // Use the user first name as a drupal user name
 //  $new_user_array['name'] = $gigya_info['firstName'];
 }
+
+/**
+ * The following example redirects the user to helloagain page if it is a returning user
+ * and to thankyou page if they just registered.
+ *
+ * @param array $commands The ajax commands array that would be returned to the browser.
+ * @param array $ctx Context array with info about the login/register process.
+ * @param User $drupal_user The drupal user object that was loaded from the drupal DB or created.
+ * @param GigyaUser $gigya_user The gigya User object that was fetched from gigya.
+ */
+function gigya_client_gigya_login_register_response_alter(&$commands, $ctx, $drupal_user, $gigya_user) {
+  if ($ctx['result'] == "success") {
+    $commands = array();
+    if ($ctx['drupal_mode'] == "login") {
+      $commands[] = ctools_ajax_command_redirect("/helloagain");
+    } else {
+      $commands[] = ctools_ajax_command_redirect("/thankyou");
+    }
+  }
+}
